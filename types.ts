@@ -1,5 +1,5 @@
 
-export type GameState = 'START' | 'PLAYING' | 'GAME_OVER' | 'PAUSED' | 'REWARD';
+export type GameState = 'START' | 'PLAYING' | 'GAME_OVER' | 'PAUSED' | 'REWARD' | 'LUCKY_WHEEL' | 'TIC_TAC_TOE' | 'BOSS_BATTLE';
 
 export type GameMode = 'CATCH' | 'SHOOT';
 
@@ -15,7 +15,7 @@ export interface FallingItem {
   width: number; // Size determines points
   speed: number;
   rotation: number;
-  type: 'gift-red' | 'gift-green' | 'candy' | 'sock' | 'heart' | 'special-nhat-linh';
+  type: 'gift-red' | 'gift-green' | 'candy' | 'sock' | 'heart' | 'special-nhat-linh' | 'snowflake' | 'ornament' | 'gingerbread';
   points: number;
 }
 

@@ -1,5 +1,5 @@
 {
-  "name": "cami-kids-mini-game",
+  "name": "cami-kids-hd",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,7 +11,8 @@
   "dependencies": {
     "lucide-react": "^0.555.0",
     "react-dom": "^19.2.0",
-    "react": "^19.2.0"
+    "react": "^19.2.0",
+    "media": "^0.2.1"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",

@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 // Cami Cat - Recreating the style from the description (White cat, black ears/spots, cute)
@@ -40,6 +39,47 @@ export const CamiCat = ({ className }: { className?: string }) => (
     
     <circle cx="75" cy="78" r="6" fill="#FFF" stroke="#000" strokeWidth="2"/>
     <path d="M73 76L73 80M77 76L77 80" stroke="#000" strokeWidth="2"/>
+  </svg>
+);
+
+// Sleeping Version of Cami Cat
+export const CamiCatSleeping = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 100 80" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+     {/* Flattened Body for lying down */}
+     <path d="M10 80 L 15 50 C 15 50 10 40 20 30 C 25 25 35 25 40 30 L 45 40 H 65 L 70 30 C 75 25 85 25 90 30 C 100 40 95 50 95 50 L 100 80 H 10 Z" fill="#FFFFFF" stroke="#000" strokeWidth="3" strokeLinejoin="round"/>
+
+     {/* Ears - Lowered */}
+     <path d="M18 32 C 15 25 20 20 25 22 L 30 30 Z" fill="#000000"/> {/* Left Spot Ear */}
+     <path d="M82 32 C 85 25 80 20 75 22 L 70 30 Z" fill="#FFFFFF" stroke="#000" strokeWidth="2"/>
+
+     {/* Closed Eyes (Curves) */}
+     <path d="M30 50 Q 35 55 40 50" stroke="#000" strokeWidth="3" strokeLinecap="round" />
+     <path d="M70 50 Q 75 55 80 50" stroke="#000" strokeWidth="3" strokeLinecap="round" />
+
+     {/* Nose & Mouth */}
+     <path d="M53 58 L 55 60 L 57 58" stroke="#000" strokeWidth="2" strokeLinecap="round"/>
+     <path d="M55 60 V 63" stroke="#000" strokeWidth="2" strokeLinecap="round"/>
+     <path d="M55 63 Q 50 66 45 63" stroke="#000" strokeWidth="2" strokeLinecap="round"/>
+     <path d="M55 63 Q 60 66 65 63" stroke="#000" strokeWidth="2" strokeLinecap="round"/>
+
+     {/* Cheeks */}
+     <circle cx="25" cy="58" r="4" fill="#FFB6C1" opacity="0.6"/>
+     <circle cx="85" cy="58" r="4" fill="#FFB6C1" opacity="0.6"/>
+
+     {/* Paws tucked in */}
+     <ellipse cx="40" cy="75" rx="6" ry="4" fill="#FFF" stroke="#000" strokeWidth="2"/>
+     <ellipse cx="70" cy="75" rx="6" ry="4" fill="#FFF" stroke="#000" strokeWidth="2"/>
+  </svg>
+);
+
+// Cozy Rug
+export const Rug = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 200 60" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="100" cy="30" rx="90" ry="25" fill="#166534" stroke="#14532d" strokeWidth="2"/>
+      <ellipse cx="100" cy="30" rx="75" ry="18" fill="none" stroke="#FCD34D" strokeWidth="2" strokeDasharray="5 5"/>
+      {/* Tassels */}
+      <path d="M10 30 H 5" stroke="#FCD34D" strokeWidth="2" strokeLinecap="round"/>
+      <path d="M190 30 H 195" stroke="#FCD34D" strokeWidth="2" strokeLinecap="round"/>
   </svg>
 );
 
@@ -253,6 +293,86 @@ export const HeartItem = ({ className }: { className?: string }) => (
   </svg>
 );
 
+export const SnowflakeItem = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="shadowFlake" x="-20%" y="-20%" width="140%" height="140%">
+         <feDropShadow dx="2" dy="2" stdDeviation="2" floodColor="#000" floodOpacity="0.2"/>
+      </filter>
+    </defs>
+    <g filter="url(#shadowFlake)">
+        {/* Main Hex Lines */}
+        <path d="M50 10 V 90 M 15 30 L 85 70 M 15 70 L 85 30" stroke="#38BDF8" strokeWidth="6" strokeLinecap="round"/>
+        {/* Tips */}
+        <path d="M50 10 L 40 25 M 50 10 L 60 25" stroke="#38BDF8" strokeWidth="4" strokeLinecap="round"/>
+        <path d="M50 90 L 40 75 M 50 90 L 60 75" stroke="#38BDF8" strokeWidth="4" strokeLinecap="round"/>
+        
+        <path d="M15 30 L 25 40 M 15 30 L 30 30" stroke="#38BDF8" strokeWidth="4" strokeLinecap="round"/>
+        <path d="M85 70 L 75 60 M 85 70 L 70 70" stroke="#38BDF8" strokeWidth="4" strokeLinecap="round"/>
+        
+        <path d="M15 70 L 30 70 M 15 70 L 25 60" stroke="#38BDF8" strokeWidth="4" strokeLinecap="round"/>
+        <path d="M85 30 L 70 30 M 85 30 L 75 40" stroke="#38BDF8" strokeWidth="4" strokeLinecap="round"/>
+
+        <circle cx="50" cy="50" r="5" fill="#E0F2FE" stroke="#38BDF8" strokeWidth="2"/>
+    </g>
+  </svg>
+);
+
+export const Ornament = ({ className }: { className?: string }) => (
+    <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="ornamentGrad" cx="0.3" cy="0.3" r="0.7">
+            <stop offset="0%" stopColor="#FDE047" /> {/* Bright Yellow */}
+            <stop offset="60%" stopColor="#EAB308" /> {/* Gold */}
+            <stop offset="100%" stopColor="#854D0E" /> {/* Dark Gold */}
+        </radialGradient>
+        <filter id="shadowOrn" x="-20%" y="-20%" width="140%" height="140%">
+          <feDropShadow dx="2" dy="4" stdDeviation="3" floodColor="#000" floodOpacity="0.2"/>
+        </filter>
+      </defs>
+      <g filter="url(#shadowOrn)">
+        {/* Cap */}
+        <rect x="42" y="10" width="16" height="10" rx="2" fill="#9CA3AF" stroke="#4B5563" strokeWidth="2"/>
+        <circle cx="50" cy="8" r="4" stroke="#4B5563" strokeWidth="2" fill="none"/>
+        
+        {/* Ball */}
+        <circle cx="50" cy="55" r="35" fill="url(#ornamentGrad)" stroke="#A16207" strokeWidth="2"/>
+        
+        {/* Decor: Stripes */}
+        <path d="M20 55 Q 50 75 80 55" stroke="#A855F7" strokeWidth="4" fill="none" opacity="0.8"/>
+        <path d="M22 45 Q 50 65 78 45" stroke="#A855F7" strokeWidth="4" fill="none" opacity="0.8"/>
+        
+        {/* Shine */}
+        <circle cx="35" cy="40" r="5" fill="white" opacity="0.6"/>
+      </g>
+    </svg>
+);
+
+export const GingerbreadMan = ({ className }: { className?: string }) => (
+    <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+       <defs>
+           <filter id="shadowCookie" x="-20%" y="-20%" width="140%" height="140%">
+               <feDropShadow dx="2" dy="4" stdDeviation="2" floodColor="#000" floodOpacity="0.2"/>
+           </filter>
+       </defs>
+       <g filter="url(#shadowCookie)">
+          {/* Body */}
+          <path d="M30 35 C20 35 15 45 15 50 C15 55 20 60 25 55 L35 50 V70 L25 85 C20 90 25 95 30 95 C35 95 40 90 45 80 V70 H55 V80 C60 90 65 95 70 95 C75 95 80 90 75 85 L65 70 V50 L75 55 C80 60 85 55 85 50 C85 45 80 35 70 35 L65 40 V30 C65 15 55 10 50 10 C45 10 35 15 35 30 V40 L30 35Z"
+                fill="#D97706" stroke="#92400E" strokeWidth="2"/>
+          
+          {/* Icing decorations */}
+          <path d="M40 70 H60 M20 50 L30 50 M70 50 L80 50" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+          <circle cx="50" cy="45" r="2" fill="white"/>
+          <circle cx="50" cy="55" r="2" fill="white"/>
+
+          {/* Face */}
+          <circle cx="45" cy="25" r="2" fill="#000"/>
+          <circle cx="55" cy="25" r="2" fill="#000"/>
+          <path d="M45 32 Q 50 35 55 32" stroke="white" strokeWidth="2" strokeLinecap="round"/>
+       </g>
+    </svg>
+);
+
 export const ChristmasTree = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
     {/* Tree Levels */}
@@ -306,6 +426,65 @@ export const Snowman = ({ className }: { className?: string }) => (
   </svg>
 );
 
+export const AngryEyes = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 100 30" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    {/* Left Eye */}
+    <path d="M20 20 L 40 10" stroke="#000" strokeWidth="5" strokeLinecap="round" />
+    {/* Right Eye */}
+    <path d="M60 10 L 80 20" stroke="#000" strokeWidth="5" strokeLinecap="round" />
+  </svg>
+);
+
+export const Snowball = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="snowGrad" cx="0.4" cy="0.4" r="0.6">
+        <stop offset="0%" stopColor="#FFFFFF" />
+        <stop offset="100%" stopColor="#A5F3FC" />
+      </radialGradient>
+      <filter id="shadowSnow" x="-20%" y="-20%" width="140%" height="140%">
+        <feDropShadow dx="2" dy="2" stdDeviation="3" floodColor="#0891B2" floodOpacity="0.4"/>
+      </filter>
+    </defs>
+    <g filter="url(#shadowSnow)">
+      <circle cx="50" cy="50" r="45" fill="url(#snowGrad)" />
+      {/* Motion lines */}
+      <path d="M20 30 Q 50 10 80 30" stroke="#E0F2FE" strokeWidth="3" fill="none" opacity="0.6"/>
+      <circle cx="35" cy="40" r="5" fill="#FFF"/>
+    </g>
+  </svg>
+);
+
+export const CandyCane = ({ className }: { className?: string }) => (
+  <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+       <filter id="shadowCane" x="-20%" y="-20%" width="140%" height="140%">
+         <feDropShadow dx="2" dy="4" stdDeviation="2" floodColor="#000" floodOpacity="0.2"/>
+       </filter>
+    </defs>
+    <g filter="url(#shadowCane)">
+        {/* Base White */}
+        <path d="M70 20 C 70 5, 30 5, 30 20 V 90" stroke="white" strokeWidth="14" strokeLinecap="round" />
+        
+        {/* Red Stripes - Manually placed for 'wrapping' effect */}
+        <mask id="caneMask">
+             <path d="M70 20 C 70 5, 30 5, 30 20 V 90" stroke="white" strokeWidth="14" strokeLinecap="round" />
+        </mask>
+        
+        <g mask="url(#caneMask)">
+            <path d="M20 90 L 40 100" stroke="#DC2626" strokeWidth="14" />
+            <path d="M20 70 L 40 80" stroke="#DC2626" strokeWidth="14" />
+            <path d="M20 50 L 40 60" stroke="#DC2626" strokeWidth="14" />
+            <path d="M20 30 L 40 40" stroke="#DC2626" strokeWidth="14" />
+            {/* Curve stripes */}
+            <path d="M25 15 L 45 25" stroke="#DC2626" strokeWidth="14" />
+            <path d="M40 5 L 60 15" stroke="#DC2626" strokeWidth="14" />
+            <path d="M60 0 L 80 10" stroke="#DC2626" strokeWidth="14" />
+        </g>
+    </g>
+  </svg>
+);
+
 // Cute Yarn Ball Projectile
 export const YarnBall = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 100 100" className={className} fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -343,13 +522,11 @@ export const Logo = ({ className, scale = 1 }: { className?: string, scale?: num
     }}>
       <span className="text-red-500" style={{ textShadow: '2px 2px 0px #FFF, 4px 4px 0px #000' }}>CAMI</span>
       <span className="w-2"></span>
-      <span className="text-green-600" style={{ textShadow: '2px 2px 0px #FFF, 4px 4px 0px #000' }}>KIDS</span>
+      <span className="text-green-600" style={{ textShadow: '2px 2px 0px #FFF, 4px 4px 0px #000' }}>KIDS HD</span>
     </h1>
     
     <div className="flex items-center gap-2 mt-2 bg-white/95 px-5 py-1.5 rounded-full border-2 border-red-200 shadow-md transform -rotate-1 relative z-20">
-      <span className="text-xl font-bold text-gray-700">Baby</span>
-      <span className="text-red-500 text-2xl animate-pulse">♥</span>
-      <span className="text-xl font-bold text-gray-700">Korea</span>
+      <span className="text-xl font-bold text-gray-700 uppercase">Minigame</span>
     </div>
   </div>
 );

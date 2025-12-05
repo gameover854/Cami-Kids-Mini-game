@@ -2,15 +2,67 @@
 export class SoundManager {
   private ctx: AudioContext | null = null;
   private masterGain: GainNode | null = null;
+  private musicGain: GainNode | null = null;
+  
+  // Music State
+  private isMusicPlaying = false;
+  private isMuted = false;
+  private schedulerTimer: number | null = null;
+  private nextNoteTime = 0;
+  private currentNoteIndex = 0;
+
+  // Jingle Bells Melody (Frequency, Duration in seconds)
+  // 0 frequency represents a rest
+  private melody = [
+    // E E E
+    { freq: 659.25, dur: 0.2 }, { freq: 0, dur: 0.05 }, 
+    { freq: 659.25, dur: 0.2 }, { freq: 0, dur: 0.05 },
+    { freq: 659.25, dur: 0.4 }, { freq: 0, dur: 0.1 },
+    // E E E
+    { freq: 659.25, dur: 0.2 }, { freq: 0, dur: 0.05 }, 
+    { freq: 659.25, dur: 0.2 }, { freq: 0, dur: 0.05 },
+    { freq: 659.25, dur: 0.4 }, { freq: 0, dur: 0.1 },
+    // E G C D E
+    { freq: 659.25, dur: 0.2 }, { freq: 0, dur: 0.05 },
+    { freq: 783.99, dur: 0.2 }, { freq: 0, dur: 0.05 },
+    { freq: 523.25, dur: 0.3 }, { freq: 0, dur: 0.05 },
+    { freq: 587.33, dur: 0.1 }, { freq: 0, dur: 0.05 },
+    { freq: 659.25, dur: 0.8 }, { freq: 0, dur: 0.2 },
+    // F F F F F
+    { freq: 698.46, dur: 0.2 }, { freq: 0, dur: 0.05 },
+    { freq: 698.46, dur: 0.2 }, { freq: 0, dur: 0.05 },
+    { freq: 698.46, dur: 0.2 }, { freq: 0, dur: 0.05 },
+    { freq: 698.46, dur: 0.2 }, { freq: 0, dur: 0.05 },
+    { freq: 698.46, dur: 0.2 }, { freq: 0, dur: 0.05 },
+    // E E E E E
+    { freq: 659.25, dur: 0.2 }, { freq: 0, dur: 0.05 },
+    { freq: 659.25, dur: 0.2 }, { freq: 0, dur: 0.05 },
+    { freq: 659.25, dur: 0.2 }, { freq: 0, dur: 0.05 },
+    { freq: 659.25, dur: 0.2 }, { freq: 0, dur: 0.05 },
+    { freq: 659.25, dur: 0.2 }, { freq: 0, dur: 0.05 },
+    // G G F D C
+    { freq: 783.99, dur: 0.2 }, { freq: 0, dur: 0.05 },
+    { freq: 783.99, dur: 0.2 }, { freq: 0, dur: 0.05 },
+    { freq: 698.46, dur: 0.2 }, { freq: 0, dur: 0.05 },
+    { freq: 587.33, dur: 0.2 }, { freq: 0, dur: 0.05 },
+    { freq: 523.25, dur: 0.8 }, { freq: 0, dur: 0.4 },
+  ];
 
   private init() {
     if (!this.ctx) {
       const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
       if (AudioContextClass) {
         this.ctx = new AudioContextClass();
+        
+        // Master Volume
         this.masterGain = this.ctx.createGain();
-        this.masterGain.gain.value = 0.3; // Master volume
+        this.masterGain.gain.value = this.isMuted ? 0 : 0.3;
         this.masterGain.connect(this.ctx.destination);
+
+        // Music Volume (Lower than SFX)
+        this.musicGain = this.ctx.createGain();
+        this.musicGain.gain.value = 0.15; // Background level
+        this.musicGain.connect(this.masterGain);
       }
     }
   }
@@ -21,6 +73,80 @@ export class SoundManager {
       await this.ctx.resume();
     }
   }
+
+  public toggleMute(muted: boolean) {
+      this.isMuted = muted;
+      if (this.masterGain) {
+          this.masterGain.gain.setValueAtTime(muted ? 0 : 0.3, this.ctx?.currentTime || 0);
+      }
+  }
+
+  // --- Music Scheduler ---
+
+  private scheduleNote(freq: number, duration: number, time: number) {
+      if (!this.ctx || !this.musicGain) return;
+      
+      if (freq > 0) {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        
+        // Use Triangle/Sine mix for a "toy piano" or 8-bit sound
+        osc.type = 'triangle';
+        osc.frequency.value = freq;
+        
+        // Envelope for "plucky" cheerful sound
+        gain.gain.setValueAtTime(0, time);
+        gain.gain.linearRampToValueAtTime(0.2, time + 0.02); // Attack
+        gain.gain.exponentialRampToValueAtTime(0.01, time + duration); // Decay
+        
+        osc.connect(gain);
+        gain.connect(this.musicGain);
+        
+        osc.start(time);
+        osc.stop(time + duration);
+      }
+  }
+
+  private scheduler() {
+      if (!this.ctx || !this.isMusicPlaying) return;
+
+      // Lookahead: Schedule notes for the next 0.1s
+      while (this.nextNoteTime < this.ctx.currentTime + 0.1) {
+          const note = this.melody[this.currentNoteIndex];
+          this.scheduleNote(note.freq, note.dur, this.nextNoteTime);
+          
+          this.nextNoteTime += note.dur;
+          
+          this.currentNoteIndex++;
+          if (this.currentNoteIndex >= this.melody.length) {
+              this.currentNoteIndex = 0; // Loop
+          }
+      }
+      
+      this.schedulerTimer = window.setTimeout(() => this.scheduler(), 25);
+  }
+
+  public startMusic() {
+      this.resume().then(() => {
+          if (this.isMusicPlaying) return;
+          if (!this.ctx) return;
+
+          this.isMusicPlaying = true;
+          this.currentNoteIndex = 0;
+          this.nextNoteTime = this.ctx.currentTime + 0.1;
+          this.scheduler();
+      });
+  }
+
+  public stopMusic() {
+      this.isMusicPlaying = false;
+      if (this.schedulerTimer) {
+          clearTimeout(this.schedulerTimer);
+          this.schedulerTimer = null;
+      }
+  }
+
+  // --- Sound Effects ---
 
   public playCatch() {
     if (!this.ctx || !this.masterGain) return;
