@@ -5,7 +5,7 @@ import { ChristmasTree, Snowman, CandyCane, CamiCat } from './components/Assets'
 
 // Variable for the logo image path
 // Using absolute path assuming 'public' is the root
-const logoCamiKids = "/media/img/logo_cami_kids.png";
+const logoCamiKids = "dist/media/img/logo_cami_kids.png";
 
 // Custom TikTok Icon
 const TikTokIcon = ({ className }: { className?: string }) => (
